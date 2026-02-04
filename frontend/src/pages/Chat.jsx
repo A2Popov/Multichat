@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { chatService } from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import { chatService, authService } from '../services/api';
 
 function Chat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [model, setModel] = useState('gpt-3.5-turbo');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,8 +35,8 @@ function Chat() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    window.location.href = '/';
+    authService.logout();
+    navigate('/');
   };
 
   return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { userService, authService } from '../services/api';
 
 function Admin() {
@@ -12,6 +13,7 @@ function Admin() {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadUsers();
@@ -46,7 +48,7 @@ function Admin() {
 
   const handleLogout = () => {
     authService.logout();
-    window.location.href = '/';
+    navigate('/');
   };
 
   if (loading) {
@@ -59,7 +61,7 @@ function Admin() {
         <h1>Admin Panel</h1>
         <div style={styles.headerRight}>
           <button 
-            onClick={() => window.location.href = '/chat'}
+            onClick={() => navigate('/chat')}
             style={styles.chatButton}
           >
             Go to Chat

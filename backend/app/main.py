@@ -11,8 +11,9 @@ from .schemas import (
 )
 from .auth import (
     authenticate_user, create_access_token, get_password_hash,
-    get_current_user, get_current_admin_user, ACCESS_TOKEN_EXPIRE_MINUTES
+    get_current_user, get_current_admin_user
 )
+from .config import settings
 
 app = FastAPI(title="Multichat API", version="1.0.0")
 
@@ -40,7 +41,7 @@ def on_startup():
         )
         db.add(admin_user)
         db.commit()
-        print("Default admin user created (username: admin, password: admin)")
+        print("Default admin user created (see README for credentials)")
 
 
 @app.get("/")
@@ -57,7 +58,7 @@ def login(login_data: LoginRequest, db: Session = Depends(get_db)):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token_expires = timedelta(minutes=settings.access_token_expire_minutes)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
