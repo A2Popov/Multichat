@@ -1,194 +1,248 @@
-# MultiChat
+# MultiChat 🚀
 
-A web application providing access to multiple AI models (OpenAI, Gemini, Claude, etc.) through a single interface.
+Мультимодельная AI чат-платформа с поддержкой более 10 провайдеров и уникальным режимом ИИ-баттл для сравнения моделей.
 
-## Features
+![MultiChat](https://img.shields.io/badge/Status-Production%20Ready-success)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Python](https://img.shields.io/badge/Python-3.11+-blue)
+![React](https://img.shields.io/badge/React-18-blue)
 
-- 🔐 JWT-based authentication
-- 💬 Chat interface with multiple AI models
-- 👥 User management (admin panel)
-- 💰 Usage tracking and billing
-- 🐳 Docker support
+---
 
-## Tech Stack
+## ✨ Возможности
 
-- **Backend**: FastAPI, SQLAlchemy, SQLite
-- **Frontend**: React, Vite, TailwindCSS
-- **Authentication**: JWT tokens
-- **AI Integration**: OpenAI API (with support for more models)
+### 💬 Умный чат
+- Сохранение истории диалогов с любой моделью
+- Прикрепление файлов (PDF, DOCX, изображения с OCR)
+- Автоматическое извлечение текста и добавление в контекст
+- Переименование и удаление сессий
 
-## Quick Start
+### ⚔️ ИИ-баттл (Arena)
+- Сравнение до **5 моделей одновременно** на одном запросе
+- Параллельное выполнение запросов
+- Детальная статистика: токены, стоимость, время ответа
+- Визуальное сравнение ответов
 
-### Using Docker (Recommended)
+### 🤖 AI Арбитраж
+- Автоматический анализ результатов баттла через GPT-5.2
+- Выявление сильных/слабых сторон каждой модели
+- Объективное определение победителя
+- Рекомендации по выбору модели
 
-1. Clone the repository:
-   ```bash
-   git clone git@github.com:A2Popov/Multichat.git
-   cd Multichat
-   ```
+### 📊 Детальная аналитика
+- История всех запросов с токенами и стоимостью
+- Статистика по моделям и дневная разбивка
+- Транзакции и управление балансом
+- Мониторинг расходов в реальном времени
 
-2. Create `.env` file in the root directory:
-   ```bash
-   SECRET_KEY=your-random-secret-key
-   OPENAI_API_KEY=your-openai-api-key
-   ```
+### 👥 Система пользователей
+- Многопользовательская платформа
+- Роли: администратор и пользователь
+- Балансы и биллинг
+- Админ-панель с управлением
 
-3. Start services:
-   ```bash
-   docker-compose up --build
-   ```
+### 🎨 Современный интерфейс
+- Адаптивный дизайн с TailwindCSS
+- Темная/светлая тема
+- Интуитивная навигация
+- Real-time обновления
 
-4. Access the application:
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
-   - API Docs: http://localhost:8000/docs
+---
 
-### Manual Setup
+## 🚀 Быстрый старт
 
-#### Backend
+### Локальная разработка (Windows)
 
-1. Create virtual environment:
-   ```bash
-   cd backend
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+```batch
+REM 1. Клонируйте репозиторий
+git clone https://github.com/A2Popov/Multichat.git
+cd Multichat
 
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+REM 2. Настройте .env файлы
+copy .env.example backend\.env
+REM Отредактируйте backend\.env и добавьте API ключи
 
-3. Create `.env` file in backend directory (copy from `.env.example`)
-
-4. Run the server:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-#### Frontend
-
-1. Install dependencies:
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-2. Run development server:
-   ```bash
-   npm run dev
-   ```
-
-## Initial Setup
-
-### Create Admin User
-
-After starting the backend, you need to create an admin user manually in the database or use Python:
-
-```python
-from app.database import SessionLocal, init_db
-from app.models.user import User
-from app.auth import get_password_hash
-
-init_db()
-db = SessionLocal()
-
-admin = User(
-    username="admin",
-    email="admin@example.com",
-    hashed_password=get_password_hash("admin123"),
-    is_admin=True,
-    balance=100.0
-)
-
-db.add(admin)
-db.commit()
-db.close()
+REM 3. Запустите интерактивное меню
+START.bat
+REM Выберите опцию 1 для запуска обоих серверов
 ```
 
-Or run the initialization script (if provided).
+**📖 Подробная инструкция:** [README-LAUNCH.md](README-LAUNCH.md)
 
-## Usage
+### Production деплой (Timeweb Cloud)
 
-1. **Login**: Use the credentials you created
-2. **Create Users**: Admin can create new users in the Admin Panel
-3. **Start Chatting**: Select a model and start chatting
-4. **Manage Balance**: Admin can adjust user balances
+#### Супер-быстрая установка (1 команда):
 
-## API Endpoints
-
-### Authentication
-- `POST /api/auth/login` - Login
-- `GET /api/auth/me` - Get current user
-
-### Users (Admin only)
-- `GET /api/users` - List users
-- `POST /api/users` - Create user
-- `PATCH /api/users/{id}` - Update user
-- `DELETE /api/users/{id}` - Delete user
-
-### Chat
-- `GET /api/chat/sessions` - Get chat sessions
-- `POST /api/chat/sessions` - Create new session
-- `GET /api/chat/sessions/{id}/messages` - Get messages
-- `POST /api/chat/sessions/{id}/messages` - Send message
-- `DELETE /api/chat/sessions/{id}` - Delete session
-
-## Configuration
-
-Environment variables (`.env`):
-
-```env
-SECRET_KEY=your-secret-key
-OPENAI_API_KEY=your-openai-api-key
-DATABASE_URL=sqlite:///./multichat.db
-ACCESS_TOKEN_EXPIRE_MINUTES=10080
-DEBUG=True
+```bash
+# На чистом Ubuntu 22.04:
+wget -O - https://raw.githubusercontent.com/A2Popov/Multichat/main/quick-start.sh | bash
 ```
 
-## Development
+#### Или поэтапная установка:
 
-See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed development instructions.
+```bash
+# 1. Подключитесь к серверу
+ssh root@your-server-ip
 
-## Project Structure
+# 2. Скачайте скрипт
+cd /tmp
+git clone https://github.com/A2Popov/Multichat.git
+cd Multichat
+chmod +x deploy.sh
 
-```
-multichat/
-├── backend/
-│   ├── app/
-│   │   ├── config/
-│   │   ├── models/
-│   │   ├── routers/
-│   │   ├── auth.py
-│   │   ├── database.py
-│   │   ├── main.py
-│   │   └── schemas.py
-│   ├── requirements.txt
-│   ├── Dockerfile
-│   └── .env.example
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── context/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── package.json
-│   ├── Dockerfile
-│   └── nginx.conf
-├── docker-compose.yml
-├── DEVELOPMENT.md
-├── project_plan.md
-└── README.md
+# 3. Запустите установку
+./deploy.sh install
+
+# 4. Настройте API ключи
+nano /opt/multichat/.env
+
+# 5. Перезапустите
+./deploy.sh restart
 ```
 
-## Contributing
+**📖 Полное руководство:** [TIMEWEB.md](TIMEWEB.md)
 
-1. Create a new branch
-2. Make your changes
-3. Submit a pull request
+---
 
-## License
+## 📋 Документация
 
-MIT License
+| Документ | Описание |
+|----------|----------|
+| [📘 TIMEWEB.md](TIMEWEB.md) | Детальное руководство по деплою на Timeweb Cloud |
+| [🔧 DEPLOY.md](DEPLOY.md) | Общая инструкция по деплою на любой сервер |
+| [💻 README-LAUNCH.md](README-LAUNCH.md) | Запуск локально на Windows/macOS/Linux |
+| [👤 USERS.md](USERS.md) | Управление пользователями и сброс паролей |
+
+---
+
+## 🛠️ Технологический стек
+
+### Backend
+- **Framework:** FastAPI 0.109+
+- **ORM:** SQLAlchemy 2.0
+- **Database:** PostgreSQL (prod) / SQLite (dev)
+- **Auth:** JWT + bcrypt
+- **File Processing:** PyPDF2, python-docx, Pillow, Tesseract OCR
+- **Server:** Gunicorn + Uvicorn workers
+
+### Frontend
+- **Framework:** React 18.2
+- **Build Tool:** Vite 5.4
+- **Styling:** TailwindCSS 3.4
+- **Routing:** React Router v6
+- **HTTP Client:** Axios
+- **State:** Context API
+
+### Infrastructure
+- **Web Server:** Nginx
+- **Process Manager:** Supervisor / systemd
+- **SSL:** Let's Encrypt (Certbot)
+- **Monitoring:** Logs + optional Netdata
+
+---
+
+## 🤖 Поддерживаемые AI модели
+
+| Провайдер | Модели | Статус |
+|-----------|--------|--------|
+| **OpenAI** | GPT-3.5, GPT-4, GPT-4-Turbo, О1, GPT-5.2 | ✅ |
+| **Anthropic** | Claude 3 (Opus, Sonnet, Haiku), Claude 3.5 | ✅ |
+| **Google** | Gemini Pro, Gemini Ultra | ✅ |
+| **Groq** | Llama 3, Mixtral, Gemma | ✅ |
+| **Mistral AI** | Mistral Large, Medium, Small | ✅ |
+| **Cohere** | Command, Command Light | ✅ |
+| **DeepSeek** | DeepSeek Chat, Coder | ✅ |
+| **Together AI** | Llama 3, Mixtral, Qwen | ✅ |
+| **Perplexity** | Llama 3.1, Mixtral | ✅ |
+| **OpenRouter** | 100+ моделей через единый API | ✅ |
+
+---
+
+## 📦 Конфигурация Timeweb
+
+### Минимальная (для тестов)
+- **Тариф:** START-1
+- **CPU:** 1 vCore | **RAM:** 1 GB | **SSD:** 10 GB
+- **Цена:** ~200₽/мес
+- **Пользователи:** 1-5
+
+### Рекомендуемая (production)
+- **Тариф:** START-2/3
+- **CPU:** 2-4 vCore | **RAM:** 2-4 GB | **SSD:** 20-40 GB
+- **Цена:** ~400-800₽/мес
+- **Пользователи:** 10-50
+
+### Расширенная (высокая нагрузка)
+- **Тариф:** START-4+
+- **CPU:** 4-8 vCore | **RAM:** 8-16 GB | **SSD:** 80-160 GB
+- **Цена:** от 1500₽/мес
+- **Пользователи:** 100+
+
+---
+
+## 🔐 Безопасность
+
+- ✅ JWT аутентификация
+- ✅ Bcrypt хеширование паролей (зафиксирован на 4.3.0 для совместимости)
+- ✅ CORS защита
+- ✅ HTTPS/SSL через Let's Encrypt
+- ✅ Rate limiting (опционально через Nginx)
+- ✅ Валидация файлов и ограничение размера
+- ✅ SQL injection защита через ORM
+- ✅ XSS защита
+
+---
+
+## 🎯 Использование
+
+### 1. Чат с файлами
+
+```
+1. Создайте новый чат, выбрав модель
+2. Нажмите 📎 для прикрепления файлов (PDF, DOCX, изображения)
+3. Введите запрос - текст из файлов автоматически добавится в контекст
+4. Получите ответ с учетом содержимого файлов
+```
+
+### 2. ИИ-баттл
+
+```
+1. Перейдите в раздел "ИИ-баттл"
+2. Выберите 2-5 моделей для сравнения
+3. Введите запрос (можно прикрепить файлы)
+4. Нажмите "Сравнить модели"
+5. Изучите ответы всех моделей параллельно
+6. Нажмите "Суммировать результаты" для AI-анализа
+```
+
+### 3. Админ-панель
+
+```
+1. Войдите как администратор (admin / admin123)
+2. Перейдите в "Панель админа"
+3. Управляйте пользователями, балансами
+4. Просматривайте статистику платформы
+5. Анализируйте использование по моделям
+```
+
+---
+
+## 🐛 Известные проблемы
+
+- **bcrypt 5.0.0** несовместим с passlib на Python 3.14 - используется 4.3.0
+- **Tesseract OCR** требует отдельной установки для распознавания текста на изображениях
+- **PostgreSQL** рекомендуется для production вместо SQLite
+
+---
+
+## 📞 Поддержка
+
+- 🐛 **Баги:** [GitHub Issues](https://github.com/A2Popov/Multichat/issues)
+- 💬 **Вопросы:** [GitHub Discussions](https://github.com/A2Popov/Multichat/discussions)
+
+---
+
+<p align="center">
+  Сделано с ❤️ для сообщества AI
+</p>
+

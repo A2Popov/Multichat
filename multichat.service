@@ -1,0 +1,30 @@
+[Unit]
+Description=MultiChat Backend API Service
+After=network.target postgresql.service
+Wants=postgresql.service
+
+[Service]
+Type=notify
+User=root
+Group=root
+WorkingDirectory=/opt/multichat/backend
+Environment="PATH=/opt/multichat/backend/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+EnvironmentFile=/opt/multichat/.env
+ExecStart=/opt/multichat/backend/venv/bin/gunicorn app.main:app \
+    --workers 4 \
+    --worker-class uvicorn.workers.UvicornWorker \
+    --bind 127.0.0.1:8008 \
+    --timeout 300 \
+    --access-logfile /var/log/multichat/access.log \
+    --error-logfile /var/log/multichat/error.log \
+    --log-level info
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+KillSignal=SIGQUIT
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

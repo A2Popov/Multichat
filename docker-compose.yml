@@ -7,11 +7,12 @@ services:
       dockerfile: Dockerfile
     container_name: multichat-backend
     ports:
-      - "8000:8000"
+      - "8008:8008"
     environment:
       - SECRET_KEY=${SECRET_KEY:-change-this-secret-key}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - DATABASE_URL=sqlite:///./multichat.db
+      - PORT=8008
     volumes:
       - ./backend:/app
       - backend-data:/app
